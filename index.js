@@ -2,6 +2,8 @@ require('dotenv').config()
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
+var throttle = require('promise-ratelimit')(5000); //10s
+
 var FormData = require('form-data');
 
 //joining path of directory 
@@ -14,30 +16,38 @@ fs.readdir(directoryPath, async function (err, files) {
   }
   let arrRequest = []
 
-  for (let file of files) {
-    console.log(file.replace('.gif', ''));
+  for (let i in files) {
+    if (i > 149 && i < 200) {
+      console.log(files[i].replace('.gif', ''));
 
-    var form = new FormData();
-    form.append('mode', 'data');
-    form.append('name', file.replace('.gif', ''));
-    form.append('token', process.env.TOKEN);
-    form.append('_x_reason', 'customize-emoji-add');
-    form.append('_x_mode', 'online');
-    form.append('image', fs.createReadStream(path.join(__dirname, process.env.FOLDER, file)));
-    const formHeaders = form.getHeaders();
-    const rq = axios.post(`${process.env.URL}/api/emoji.add`, form, {
-      headers: {
-        ...formHeaders,
-      },
-    })
-    arrRequest.push(rq)
+      var form = new FormData();
+      form.append('mode', 'data');
+      form.append('name', files[i].replace('.gif', ''));
+      form.append('token', process.env.TOKEN);
+      form.append('_x_reason', 'customize-emoji-add');
+      form.append('_x_mode', 'online');
+      form.append('image', fs.createReadStream(path.join(__dirname, process.env.FOLDER, files[i])));
+      const formHeaders = form.getHeaders();
+      const rq = await axios.post(`${process.env.URL}/api/emoji.add`, form, {
+        headers: {
+          ...formHeaders,
+        },
+      })
+      console.log('rq', rq)
+    }
+    // arrRequest.push(rq)
   }
 
 
-  Promise.all(arrRequest).then(function (values) {
-    console.log(values);
-  });
-
+  // Promise.all(arrRequest).then(function (values) {
+  //   console.log(values);
+  // });
+  // for (let i = 0; i < files.length; i++) {
+  //   throttle().then(async function () {
+  //     console.log('gooo')
+  //     await arrRequest[i]
+  //   });
+  // }
 
 });
 
