@@ -22,7 +22,7 @@ fs.readdir(directoryPath, async function (err, files) {
 
       var form = new FormData();
       form.append('mode', 'data');
-      form.append('name', files[i].replace('.gif', ''));
+      form.append('name', files[i].replace(/(.gif|.png|.jpg)/gi, ''));
       form.append('token', process.env.TOKEN);
       form.append('_x_reason', 'customize-emoji-add');
       form.append('_x_mode', 'online');
@@ -33,7 +33,7 @@ fs.readdir(directoryPath, async function (err, files) {
           ...formHeaders,
         },
       })
-      console.log('rq', rq)
+      console.log('rq', rq && rq.data)
     }
     // arrRequest.push(rq)
   }

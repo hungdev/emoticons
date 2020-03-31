@@ -9,7 +9,7 @@ var FormData = require('form-data');
 //joining path of directory 
 const directoryPath = path.join(__dirname, process.env.FOLDER);
 
-const prefix = 'yoyo'
+const prefix = 'em'
 //passsing directoryPath and callback function
 fs.readdir(directoryPath, async function (err, files) {
   //handling error
@@ -19,12 +19,12 @@ fs.readdir(directoryPath, async function (err, files) {
   let arrRequest = []
 
   for (let i in files) {
-    if (i < 50) {
-      console.log(files[i].replace('.gif', ''));
+    if (i < 600 && i > 580) {
+      console.log(files[i].replace(/(.gif|.png|.jpg)/gi, ''));
 
       var form = new FormData();
       form.append('mode', 'data');
-      form.append('name', `${prefix}-${files[i].replace('.gif', '')}`);
+      form.append('name', `${prefix}-${files[i].replace(/(.gif|.png|.jpg)/gi, '')}`);
       form.append('token', process.env.TOKEN);
       form.append('_x_reason', 'customize-emoji-add');
       form.append('_x_mode', 'online');
@@ -35,7 +35,7 @@ fs.readdir(directoryPath, async function (err, files) {
           ...formHeaders,
         },
       })
-      console.log('rq', rq)
+      console.log('rq', rq && rq.data)
     }
     // arrRequest.push(rq)
   }
