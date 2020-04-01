@@ -9,7 +9,7 @@ var FormData = require('form-data');
 //joining path of directory 
 const directoryPath = path.join(__dirname, process.env.FOLDER);
 
-const prefix = 'pepe'
+const prefix = 'rf'
 //passsing directoryPath and callback function
 fs.readdir(directoryPath, async function (err, files) {
   //handling error
@@ -22,9 +22,10 @@ fs.readdir(directoryPath, async function (err, files) {
     if (i < 180 && i > 89) {
       console.log(files[i].replace(/(.gif|.png|.jpg)/gi, ''));
       let lowercaseName = `${prefix}-${files[i].replace(/(.gif|.png|.jpg)/gi, '')}`
+      let removeSpecialCharWithoutDash = lowercaseName.replace(/[^a-zA-Z-]/g, "");
       var form = new FormData();
       form.append('mode', 'data');
-      form.append('name', lowercaseName.toLowerCase());
+      form.append('name', removeSpecialCharWithoutDash.toLowerCase());
       form.append('token', process.env.TOKEN);
       form.append('_x_reason', 'customize-emoji-add');
       form.append('_x_mode', 'online');
