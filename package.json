@@ -1,5 +1,5 @@
 {
-  "name": "yahoo-emoticons",
+  "name": "emoticons",
   "version": "1.0.0",
   "description": "Source: https://sites.google.com/site/funkychatroom/yahoo-emoticons",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hungdev/yahoo-emoticons.git"
+    "url": "git+https://github.com/hungdev/emoticons.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hungdev/yahoo-emoticons/issues"
+    "url": "https://github.com/hungdev/emoticons/issues"
   },
-  "homepage": "https://github.com/hungdev/yahoo-emoticons#readme",
+  "homepage": "https://github.com/hungdev/emoticons#readme",
   "dependencies": {
     "apisauce": "^1.1.1",
     "axios": "^0.19.2",
